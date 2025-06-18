@@ -15,6 +15,14 @@ import type { Task } from './types';
     })
   }
 
+  function toggleDone(taskId: string){
+    const task = tasks.value.find((task) => task.id === taskId)
+
+    if(task){
+      task.done = !task.done
+    }
+  }
+
 </script>
 
 <template>
@@ -22,7 +30,9 @@ import type { Task } from './types';
 
     <h1>{{ message }}</h1>
     <TaskForm @add-task="addTask" />
-    <TaskList :tasks = tasks />
+    <h3 v-if="!tasks.length">Add a task to get started.</h3>
+    <h3 v-else> x / {{ tasks.length }} tasks completeted</h3>
+    <TaskList @toggle-done="toggleDone" :tasks = tasks />
     
   </main>
 </template>
